@@ -26,11 +26,10 @@ try:
         titles = r.select('span.lnk_tit')
         span = []
         for span_tag in titles:
-            span_value = span_tag.get_text(strip=True) if span_tag else ""
-            title = span_value
+            title = span_tag.text
             span.append(title)
             
-        title_list.append(" ".join(span))
+        title_list.append(span)
         desc_list.append(desc)
     
     #. Pandas DataFrame 만들기
@@ -43,7 +42,7 @@ try:
     print(chart_df.head(10))
     
     #. CSV 파일로 저장하는 경우
-    #chart_df.to_csv('naver-search.csv', index=False, encoding='utf-8-sig')
+    #chart_df.to_csv(f'naver-search_{keyword}.csv', index=False, encoding='utf-8-sig')
     
     #. EXCEL 파일로 저장하는 겨우
     #now = datetime.now()

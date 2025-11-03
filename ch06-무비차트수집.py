@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 from datetime import datetime
+import urllib.request as req
+import os
 
 #. User-Agent 설정 (서버가 봇을 차단할 수 있으므로 브라우저 정보 추가)
 headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15"}
@@ -31,9 +33,12 @@ try:
     #print(movie_rows)
     
     for idx, row in enumerate(movie_rows):        
-        count = row.select_one('span.sub_text').get_text(strip=True) if row.select_one('span.sub_text') else 'N/A'
-        title = row.select_one('strong.name').get_text(strip=True) if row.select_one('strong.name') else 'N/A'
-        img = row.select_one('img').get('src') if row.select_one('img').get('src') else 'N/A'
+        #count = row.select_one('span.sub_text').get_text(strip=True) if row.select_one('span.sub_text') else 'N/A'
+        #title = row.select_one('strong.name').get_text(strip=True) if row.select_one('strong.name') else 'N/A'
+        #img = row.select_one('img').get('src') if row.select_one('img') else 'N/A'
+        count = row.select_one('span.sub_text').text
+        title = row.select_one('strong.name').text
+        img = row.select_one('img').attrs['src']
         count_list.append(count)
         title_list.append(title)
         img_list.append(img)
@@ -54,9 +59,17 @@ try:
     #chart_df.to_csv('movie_chart_top100.csv', index=False, encoding='utf-8-sig')
     
     #. EXCEL 파일로 저장하는 경우
-    now = datetime.now()
-    filename = now.strftime('무비차트_top100_%Y%m%d_%H%M.xlsx')
-    chart_df.to_excel(filename, index=False, engine='openpyxl')
+    #now = datetime.now()
+    #filename = now.strftime('무비차트_top100_%Y%m%d_%H%M.xlsx')
+    #chart_df.to_excel(filename, index=False, engine='openpyxl')
+    
+    #. 이미지 내려받기
+    #folder_name = './무비차트포스터'
+    #if not os.path.exists(folder_name):
+    #    os.mkdir(folder_name)
+    #for idx, img_url in enumerate(img_list):
+    #    file, ext = os.path.splitext(img_url) #. ext : .을 포함한 확장자
+    #    req.urlretrieve(img_url, f'{folder_name}/movie_{idx + 1}{ext}')
     
 except requests.exceptions.RequestException as e:
     print(f'Error during requests to {url}: {e}')
