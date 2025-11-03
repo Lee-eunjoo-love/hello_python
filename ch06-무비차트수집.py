@@ -6,7 +6,7 @@ from datetime import datetime
 #. User-Agent 설정 (서버가 봇을 차단할 수 있으므로 브라우저 정보 추가)
 headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15"}
 
-#. MEGABOX 박스오피스
+#. 박스오피스
 url = 'https://search.naver.com/search.naver?sm=tab_sug.top&where=nexearch&ssc=tab.nx.all&query=%ED%98%84%EC%9E%AC%EC%83%81%EC%98%81%EC%98%81%ED%99%94+%EC%88%9C%EC%9C%84&oquery=%ED%98%84%EC%9E%AC%EC%83%81%EC%98%81%EC%98%81%ED%99%94&tqi=jdNzusqVOsVsstJW5qlssssssMw-124645&acq=%ED%98%84%EC%9E%AC%EC%83%81%EC%98%81%EC%98%81%ED%99%94&acr=1&qdt=0&ackey=ookijq85'
 
 #. requests 를 이용해 웹 페이지 HTML 가져오기
@@ -22,7 +22,7 @@ try:
     title_list = []
     img_list = []
     
-    #. CGV 무비차트에서 정보 추출
+    #. 무비차트에서 정보 추출
     movies = soup.select('div.list_image_box')
     #print(movies)
     
