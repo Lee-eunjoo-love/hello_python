@@ -21,6 +21,7 @@ try:
     count_list = []
     title_list = []
     img_list = []
+    rank_list = []
     
     #. 무비차트에서 정보 추출
     movies = soup.select('div.list_image_box')
@@ -29,16 +30,18 @@ try:
     movie_rows = soup.select('ul._panel > li')
     #print(movie_rows)
     
-    for row in movie_rows:
+    for idx, row in enumerate(movie_rows):        
         count = row.select_one('span.sub_text').get_text(strip=True) if row.select_one('span.sub_text') else 'N/A'
         title = row.select_one('strong.name').get_text(strip=True) if row.select_one('strong.name') else 'N/A'
         img = row.select_one('img').get('src') if row.select_one('img').get('src') else 'N/A'
         count_list.append(count)
         title_list.append(title)
         img_list.append(img)
+        rank_list.append(idx + 1)
         
     #. Pandas DataFrame 만들기
     chart_df = pd.DataFrame({
+        '순위': rank_list,
         '조회수': count_list,
         '제목': title_list,
         '포스터': img_list,
