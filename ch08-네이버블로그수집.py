@@ -17,7 +17,7 @@ try:
     content_list = []
     
     #. 1 ~ 5 페이지까지 조회
-    for page_num in range(1, 2):
+    for page_num in range(1, 6):
         browser.get(f"https://section.blog.naver.com/Search/Post.naver?pageNo={page_num}&rangeType=ALL&orderBy=sim&keyword={keyword}")
         time.sleep(2)
         link_elements = browser.find_elements(By.CSS_SELECTOR, "a.desc_inner")
