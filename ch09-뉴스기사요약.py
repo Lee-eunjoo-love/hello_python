@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 from newspaper import Article
 import json
+from gtts import gTTS
+from playsound import playsound
 
 #. User-Agent 설정 (서버가 봇을 차단할 수 있으므로 브라우저 정보 추가)
 headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15"}
@@ -65,6 +67,16 @@ try:
     #response_summary_dict = json.loads(response_summary.text)
     #print(response_summary_dict)
     
+    #. 기사 요약 결과 음성 변환
+    sample_summary_dict = {
+        'status': {'code': '20000', 'message': 'OK'}, 
+        'result': {'text': '- 연일 최고치를 경신하던 코스피에 제동이 걸림\n- 미국발 악재가 한국을 비롯한 아시아 주요 증시의 발목을 잡음\n- 코스피가 장 중 한때 3867.81까지 급락함\n- 국내 증시는 전날 뉴욕증시가 AI 빅테크 고평가 논란으로 일제히 하락하며 시장이 열리자마자 큰 폭으로 하락함\n- AI 고평가 논란에 불을 지핀 건 골드만삭스와 모건스탠리 등 글로벌 투자은행(IB)임\n- 미국 백악관이 엔비디아의 최신 AI 반도체 ‘블랙웰’의 중국 수출을 막을 거란 입장을 밝히면서 엔비디아 주가도 3.96% 하락함\n- 미국 연방정부의 셧다운 사태가 장기화할 거란 우려도 투자 심리를 얼어붙게 함\n- 달러 대비 원화가치가 하락한 것 역시 국내 증시엔 악재로 작용함\n- 증시 전문가들은 이틀 연속 이어진 국내 증시 하락은 단기적 현상에 그칠 것으로 예상함', 'inputTokens': 929}
+    }
+    #. print(sample_summary_dict['result']['text'])
+    comment_to_voice = gTTS(text=sample_summary_dict['result']['text'], lang="ko")
+    comment_to_voice.save("news.mp3")
+    playsound("news.mp3")
+    
 except requests.exceptions.RequestException as e:
     print(f'Error during requests to {url}: {e}')    
     
@@ -83,3 +95,10 @@ except Exception as e:
 #음\n- 코스피가 장 중 한때 3867.81까지 급락함\n- 국내 증시는 전날 뉴욕증시가 AI 빅테크 고평가 논란으로 일제히 하락하며 시장이 열리자마자 큰 폭으로 하락함\n- AI 고평가 논란에 
 #불을 지핀 건 골드만삭스와 모건스탠리 등 글로벌 투자은행(IB)임\n- 미국 백악관이 엔비디아의 최신 AI 반도체 ‘블랙웰’의 중국 수출을 막을 거란 입장을 밝히면서 엔비디아 주가도 3.96% 하락함\n- 미국 연방정부의 셧다운 사태가 장기화할 거란 우려도 투자 심리를 얼어붙게 함\n- 달러 대비 원화가치가 하락한 것 역시 국내 증시엔 악재로 작용함\n- 증시 전문가들은  
 #이틀 연속 이어진 국내 증시 하락은 단기적 현상에 그칠 것으로 예상함', 'inputTokens': 929}}
+
+#. TTS API : 텍스트를 음성으로 변환하는 API 
+#. gTTS 모듈 (무료 API)
+# pip install gTTS
+#. playsound 오디오 파일 재생 모듈
+# pip install playsound
+# 1.3.0 버전 설치 오류로 이전 버전(pip install playsound==1.2.2) 설치
