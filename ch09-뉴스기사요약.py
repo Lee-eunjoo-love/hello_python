@@ -59,11 +59,11 @@ try:
         "includeAiFilters": False
     }
     
-    response_summary = requests.post('https://clovastudio.stream.ntruss.com/v1/api-tools/summarization/v2', data=json.dumps(data), headers=headers)
-    response_summary.raise_for_status() #. HTTP 오류 발생시 예외 발생
+    #response_summary = requests.post('https://clovastudio.stream.ntruss.com/v1/api-tools/summarization/v2', data=json.dumps(data), headers=headers)
+    #response_summary.raise_for_status() #. HTTP 오류 발생시 예외 발생
     
-    response_summary_dict = json.loads(response_summary.text)
-    print(response_summary_dict)
+    #response_summary_dict = json.loads(response_summary.text)
+    #print(response_summary_dict)
     
 except requests.exceptions.RequestException as e:
     print(f'Error during requests to {url}: {e}')    
